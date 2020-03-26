@@ -1,0 +1,37 @@
+{
+  "name": "smartcontract-experiments",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/simulation.js",
+  "scripts": {
+    "test": "mocha -r esm --reporter list 'src/**/*.spec.js'",
+    "build": "webpack --config=webpack.config.js",
+    "ganache": "ganache-cli",
+    "simulation": "yarn build && node dist/simulation.js",
+    "up": "docker-compose up --build --force-recreate --abort-on-container-exit",
+    "down": "docker-compose down --rmi local"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4",
+    "ethers": "^4.0.46",
+    "web3": "^1.2.6"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.8",
+    "@types/mocha": "^5.2.4",
+    "@types/node": "^12.12.31",
+    "@types/web3": "^1.2.2",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "chai": "^4.1.2",
+    "eslint": "^6.7.2",
+    "esm": "^3.2.25",
+    "ganache-cli": "^6.9.1",
+    "ganache-core": "^2.10.2",
+    "mocha": "^7.1.1",
+    "solc": "^0.6.4",
+    "typescript": "~3.7.5",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}

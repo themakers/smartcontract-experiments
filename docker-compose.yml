@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  ganache:
+    command: yarn run ganache
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    ports:
+      - "8545:8545"
+
+  simulation:
+    command: yarn run simulation
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    depends_on:
+      - ganache
+    links:
+      - ganache

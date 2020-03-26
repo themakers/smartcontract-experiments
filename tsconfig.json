@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+
+    // "sourceMap": true,
+    "sourceRoot": ".",
+    // "mapRoot": ".",
+    "inlineSourceMap": true,
+    "inlineSources": false,
+
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": []
+  },
+  "include": [
+    "src/*.ts",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
