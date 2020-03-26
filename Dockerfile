@@ -1,17 +1,26 @@
-FROM node:10-alpine
+################################################################
+#### base image
+FROM node:10-alpine as base
 
 RUN apk add --no-cache make gcc g++ python git bash
 
-# "node_modules" layers
-COPY package.json /tmp/package.json
-COPY yarn.lock /tmp/yarn.lock
-RUN cd /tmp && yarn install
-RUN mkdir -p /smartcontract-experiments && cp -a /tmp/node_modules /smartcontract-experiments/
+################################################################
+#### node_modules handler
+FROM base as node_modules
 
-# "app" layers
+WORKDIR /
+
+COPY package.json .
+COPY yarn.lock .
+RUN  yarn install
+
+################################################################
+#### final container
+FROM base
+
+COPY --from=node_modules /node_modules /smartcontract-experiments/node_modules
+
 WORKDIR /smartcontract-experiments
 COPY . .
 
 ENV DOCKER true
-
-CMD [ "sh" ]

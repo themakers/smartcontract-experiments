@@ -26,8 +26,8 @@
 
 ## Misc
 
-**swarm-gateways.net**
-https://swarm-gateways.net/
+**Ethereum Developer Resources**
+https://ethereum.org/developers/#getting-started
 
 **EIP20**
 https://eips.ethereum.org/EIPS/eip-20
@@ -44,5 +44,34 @@ https://subspace.embarklabs.io/#learn
 **dApps informational website**
 https://www.stateofthedapps.com/
 
+**swarm-gateways.net**
+https://swarm-gateways.net/
 
 https://docs.ethers.io/ethers.js/html/cookbook-providers.html#testrpc-ganache
+
+**SafeMath**
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/math/SafeMath.sol";
+
+**Basic dApps browser integration**
+```javascript
+window.addEventListener('load', async () => {
+  	if (window.ethereum) { // Modern dapp browsers...
+        window.web3 = new Web3(ethereum);
+        try {
+            // Request account access if needed
+            await ethereum.enable();
+            // Acccounts now exposed
+            accountaddress = web3.givenProvider.selectedAddress;
+            ballotContract = new web3.eth.Contract(abi);        		    
+        } catch (error) {
+            // User denied account access...
+        }
+    } else if (window.web3) { // Legacy dapp browsers...
+            window.web3 = new Web3(web3.currentProvider);
+            // Acccounts always exposed
+            web3.eth.sendTransaction({/* ... */});
+    } else { // Non-dapp browsers...
+            console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+});
+```
