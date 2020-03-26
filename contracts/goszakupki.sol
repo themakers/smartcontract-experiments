@@ -1,62 +1,75 @@
 pragma solidity ^0.6.1;
 
-contract owned {
+import "./owned.sol";
 
-    address public owner;
+contract Goszakupki is owned {
 
-    address private candidate = address(0);
-    bool private candidateConfirmed = false;
+    Popil[] public popil;
 
-    constructor() payable public {
-        owner = msg.sender;
+    mapping(address => Popil[]) private popilByUser;
+
+    constructor() public {
     }
 
-    modifier onlyOwner {
-        require(owner == msg.sender, "only owner can do this");
-        _;
+    function newPopil(
+        string memory _title,
+        uint _startPrice,
+        string memory _description
+    ) public payable returns (address) {
+
+        Popil _newPopil = new Popil(msg.sender, _title, _startPrice, _description);
+
+        popil.push(_newPopil);
+
+        popilByUser[msg.sender].push(_newPopil);
+
+        return address(_newPopil);
     }
 
-    modifier onlyUnconfirmedCandidate {
-        require(candidate != address(0), "contract is not in owner transition state");
-        require(candidate == msg.sender, "only active candidate");
-        require(candidateConfirmed == false, "you already confirmed yourself");
-        _;
-    }
-
-    function changeOwner(address _owner) public onlyOwner {
-        require(_owner != owner, "whattaya fuckin doin?");
-
-        candidate = _owner;
-    }
-
-    function cancelOwnershipTransfer() public onlyOwner {
-        candidate = address(0);
-        candidateConfirmed = false;
-    }
-
-    function confirmMeAsCandidate() public onlyUnconfirmedCandidate {
-        candidateConfirmed = true;
-    }
-
-    function confirmOwner(address _newOwner) public onlyOwner {
-        require(candidate != address(0), "contract should be in owner transition state");
-        require(candidate == _newOwner, "new owner mismatch");
-        require(candidateConfirmed == true, "candidate must confirm itself");
-
-        owner = _newOwner;
-
-        candidate = address(0);
-        candidateConfirmed = false;
+    function getMyPopils() public view returns (Popil[] memory) {
+        return popilByUser[msg.sender];
     }
 }
 
-contract goszakupki is owned {
+contract Popil {
+    event NewOffer(address participant, uint256 amount);
 
-    constructor() payable public {
+    address payable public initiator;
+    string public title;
+    string public description;
+
+    struct Offer {
+        address payable participant;
+        uint256 amount;
     }
 
+    uint public startPrice;
+    uint public lastPrice;
+    mapping(address => Offer) public offers;
 
-    function getOwner() public view returns(address) {
-        return owner;
+    constructor(
+        address payable _initiator,
+        string memory _title,
+        uint _startPrice,
+        string memory _description
+    ) public payable {
+        require(msg.value == _startPrice, "you should deposit at least _startPrice value");
+
+        initiator = _initiator;
+        title = _title;
+        startPrice = _startPrice;
+        description = _description;
+
+        lastPrice = _startPrice;
     }
+
+    function offer() public payable {
+        require(msg.value < lastPrice, "you can only bid with lowest price");
+
+        Offer memory newOffer = Offer({participant : msg.sender, amount : msg.value});
+        offers[newOffer.participant] = newOffer;
+
+        emit NewOffer(newOffer.participant, newOffer.amount);
+    }
+
 }

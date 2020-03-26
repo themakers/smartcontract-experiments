@@ -1,4 +1,4 @@
-describe('goszakupki contract =>', () => {
+describe('Goszakupki contract =>', () => {
     it('hello', () => {
     })
 })

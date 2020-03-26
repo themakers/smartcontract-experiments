@@ -17,7 +17,7 @@ export default () => {
 
     const input = {
         language: 'Solidity',
-        sources: loadContracts('goszakupki.sol'),
+        sources: loadContracts('goszakupki.sol', 'owned.sol'),
         settings: {
             outputSelection: {
                 '*': {
@@ -29,6 +29,12 @@ export default () => {
 
     const output = JSON.parse(solc.compile(JSON.stringify(input)))
     // console.log('output', output)
+    if (output.errors && output.errors.length > 0) {
+        output.errors.forEach((err) => {
+            console.error(err.formattedMessage)
+        })
+        throw new Error('compilation failed')
+    }
 
     for (let sourceFileName in output.contracts) {
         const sourceFile = output.contracts[sourceFileName]
@@ -41,7 +47,7 @@ export default () => {
             console.log(String.fromCharCode(0x2022).repeat(64))
             // console.log('contract', sourceFileName, '=>', contractName)
 
-            if (contractName === "goszakupki") {
+            if (contractName === "Goszakupki") {
 
                 // console.log('gas', contract.evm.gasEstimates.creation, contract.evm.gasEstimates.external)
                 // console.log(bytecode.length, abi)

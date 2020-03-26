@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 set -e -x
 
-docker-compose up --build --force-recreate --abort-on-container-exit
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 \
+    docker-compose up --build --force-recreate --abort-on-container-exit

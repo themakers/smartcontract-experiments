@@ -2,12 +2,27 @@
 
 # How to run?
 
-* install `docker`
-* install `docker-compose`
+* install latest `docker`
+* install latest `docker-compose`
 * invoke `./compose-up` in shell from repository root
 
+# Development cycle
 
-# Notes
+1. Develop contract
+2. Cover new features with assertions
+3. Invoke `./compose-up` to run testsuite
+
+## Docs
+
+* Solidity
+  * [function-modifiers](https://solidity.readthedocs.io/en/develop/contracts.html#function-modifiers)
+  * [structure-of-a-contract](https://solidity.readthedocs.io/en/v0.6.4/structure-of-a-contract.html)
+
+### Questions
+
+* Gas estimation?
+
+### Notes
 
 * web3.js - Ethereum JavaScript API
   * [docs](https://web3js.readthedocs.io)
@@ -24,7 +39,7 @@
     * examples
       * [basic - wallets/contracts](https://kauri.io/accelerating-dapp-development-with-ethersjs/805715d4e66440d996fee0930a6d0fbc/a)
 
-## Misc
+### Misc
 
 **Ethereum Developer Resources**
 https://ethereum.org/developers/#getting-started
@@ -48,6 +63,8 @@ https://www.stateofthedapps.com/
 https://swarm-gateways.net/
 
 https://docs.ethers.io/ethers.js/html/cookbook-providers.html#testrpc-ganache
+
+https://medium.com/upstate-interactive/mappings-arrays-87afc697e64f
 
 **SafeMath**
 import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/math/SafeMath.sol";

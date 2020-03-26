@@ -11,7 +11,6 @@ const banner = (text) => {
     console.log(String.fromCharCode(0x2022).repeat(64))
     console.log(String.fromCharCode(0x2022).repeat(4), text)
     console.log(String.fromCharCode(0x2022).repeat(64))
-
 }
 
 const provider = new ethers.providers.JsonRpcProvider(
@@ -58,7 +57,7 @@ const provider = new ethers.providers.JsonRpcProvider(
     let bobContract = new ethers.Contract(contractAddress, contractABI, bobWallet)
     let eveContract = new ethers.Contract(contractAddress, contractABI, eveWallet)
 
-    banner('STARTING TEST')
+    banner('TESTING OWNERSHIP TRANSFER')
 
     await OK('Alice checks who is the owner', async () => {
         return (await aliceContract.functions.owner() === await aliceWallet.getAddress())
@@ -96,7 +95,7 @@ const provider = new ethers.providers.JsonRpcProvider(
         return (await bobContract.functions.owner() === await bobWallet.getAddress())
     })
 
-    banner('TEST PASSED')
+    banner('OWNERSHIP TRANSFER TEST PASSED')
 })();
 
 
