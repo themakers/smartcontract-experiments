@@ -15,12 +15,17 @@
 ## Docs
 
 * Solidity
+  * [costs-of-a-real-world-ethereum-contract](https://hackernoon.com/costs-of-a-real-world-ethereum-contract-2033511b3214)
+  * [smart-contract-best-practices](https://github.com/ConsenSys/smart-contract-best-practices)
   * [function-modifiers](https://solidity.readthedocs.io/en/develop/contracts.html#function-modifiers)
   * [structure-of-a-contract](https://solidity.readthedocs.io/en/v0.6.4/structure-of-a-contract.html)
 
-### Questions
+### Gas
+
+[ethereum-gas-explained-in-plain-english](https://medium.com/coinmonks/ethereum-gas-explained-in-plain-english-d9e60a699c54)
 
 * Gas estimation?
+  * For blobs?
 
 ### Notes
 

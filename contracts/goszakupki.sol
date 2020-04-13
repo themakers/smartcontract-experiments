@@ -29,6 +29,12 @@ contract Goszakupki is owned {
     function getMyPopils() public view returns (Popil[] memory) {
         return popilByUser[msg.sender];
     }
+
+    bytes public stor;
+
+    function putBytes(bytes memory b) public {
+        stor = b;
+    }
 }
 
 contract Popil {
@@ -46,6 +52,7 @@ contract Popil {
     uint public startPrice;
     uint public lastPrice;
     mapping(address => Offer) public offers;
+    address[] public participants;
 
     constructor(
         address payable _initiator,
@@ -68,8 +75,16 @@ contract Popil {
 
         Offer memory newOffer = Offer({participant : msg.sender, amount : msg.value});
         offers[newOffer.participant] = newOffer;
+        participants.push(newOffer.participant);
+
+        lastPrice = newOffer.amount;
 
         emit NewOffer(newOffer.participant, newOffer.amount);
     }
 
+    function closePopil() public view {
+        for (uint index = 0; index < participants.length; index++) {
+            // Offer memory o = offers[participants[index]];
+        }
+    }
 }

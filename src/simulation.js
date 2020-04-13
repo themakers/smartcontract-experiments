@@ -72,6 +72,8 @@ const provider = new ethers.providers.JsonRpcProvider(
     }, 'only owner can do this')
 
     await OK('Alice transfers ownership to Bob', async () => {
+        console.log('ESTIMATE')
+        console.dir((await aliceContract.estimate.changeOwner(await bobWallet.getAddress())))
         return await aliceContract.functions.changeOwner(await bobWallet.getAddress())
     })
 
@@ -95,10 +97,43 @@ const provider = new ethers.providers.JsonRpcProvider(
         return (await bobContract.functions.owner() === await bobWallet.getAddress())
     })
 
+
     banner('OWNERSHIP TRANSFER TEST PASSED')
+
+    banner('STARTING BUSINESS LOGIC TEST')
+
+    await OK('Should store byte array', async () => {
+        // const b = ethers.utils.hexlify(new Uint8Array(1024))
+        const b = Array.from(new Uint8Array(1))
+        // const b = ethers.utils.arrayify(new Uint8Array(1024))
+        // const b = ethers.utils.toUtf8Bytes('hello')
+        // let b = "0xddd0a7290af9526056b4e35a077b9a11b513aa0028ec6c9880948544508f3c63" +
+        //     "265e99e47ad31bb2cab9646c504576b3abc6939a1710afc08cbf3034d73214b8" +
+        //     "1c"
+        // console.log('ESTIMATE')
+        // console.log((await aliceContract.estimate.putBytes(b)).toString())
+        return await aliceContract.functions.putBytes(b)
+    })
+
 })();
 
+// gas price:  2 gwei
+// txn time:  20 min
+//
+// contract deployment => few usd
+// base     => 21000   =>   0.43₽
+// 0        => 23920   =>   0.49₽
+// 1        => 43266   =>   0.89₽
+// 10       => 43266   =>   0.89₽
+// 1024     => 76616   =>   1.58₽
+// 1024*2   => 108751  =>   2.25₽
+// 1024*100 => 3277373 =>  67.81₽
+// 1024*200 => 6548927 => 135.49₽
 
+// async getGasPrice() {
+//     const gasPrice = await super.getGasPrice()
+//     return gasPrice.add(gasPrice.div(5))
+// }
 
 // const ganache = Ganache.provider({});
 // const provider = new ethers.providers.Web3Provider(ganache);
